@@ -17,7 +17,7 @@ app.get('/usuario', (req, res ) => {
     // Se establecen también los campos que se desean devolver.
     Usuario.find( { estado: true }, 'nombre role estado email google img')
         .skip( desde )
-        .limit( 5 )
+        .limit( limite )
         .exec( ( err, usuarios ) => {
 
             if( err ) {
