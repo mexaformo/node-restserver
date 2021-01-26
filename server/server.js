@@ -3,52 +3,30 @@ require( './config/config' );
 const express       = require('express');
 const app           = express();
 const bodyParser    = require('body-parser');
-
+const mongoose      = require('mongoose');
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
  
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+
+// Incluyo las referencias a las rutas definidas para usuario.
+app.use( require( './routes/usuario' ) );
 
 
-app.get('/usuario', (req, res ) => {
-    res.send('get Usuario');
-} );
+mongoose.connect( process.env.URLDB, { 
+                useNewUrlParser: true, 
+                useUnifiedTopology: true,   
+                useCreateIndex: true,              
+             }, 
+                ( err ) => {
+                if ( err ) {
+                    throw err;
+                }    
+                console.log('Base de datos Online');
+            });
 
-app.post('/usuario', (req, res ) => {
-    let body = req.body;
-
-    if ( body.nombre == undefined ) {
-        res.status( 400 ).json(
-            {
-                ok: false,
-                mensaje: 'El nombre está vacío.',
-            
-            }
-        );
-
-    } else {
-        res.json({
-            persona: body
-        });
-    }
-} );
-
-app.put('/usuario/:id', (req, res ) => {
-    let id = req.params.id;
-    res.json( {
-        id
-    } );
-} );
-
-app.delete('/usuario', (req, res ) => {
-    res.send('Hola Mundo');
-} );
-
-// app.update('/usuario', (req, res ) => {
-//     res.send('Hola Mundo');
-// } );
 
 app.listen( process.env.PORT, () => {
     console.log( `Escuchando en el puerto ${ process.env.PORT }`);
