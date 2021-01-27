@@ -15,7 +15,7 @@ if ( process.env.NODE_ENV === 'dev' ) {
     urlDB = process.env.MONGO_URI;
 }
 
-]// pass: KQKxSfw57r9qxAaU
+// pass: KQKxSfw57r9qxAaU
 // mongodb+srv://sa:<password>@scroposclust.pmu5p.mongodb.net/<dbname>?retryWrites=true&w=majority
 
 process.env.URLDB = urlDB;
